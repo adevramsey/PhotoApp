@@ -1,0 +1,17 @@
+[
+  {
+    "src": "src/assets/photos/joshua1:9.jpg",
+    "title": "Joshua 1:9",
+    "tags": ["Bible"]
+  },
+  {
+    "src": "src/assets/photos/wedding_invite_back.png",
+    "title": "Wedding Invite Back",
+    "tags": ["Wedding"]
+  },
+  {
+    "src": "src/assets/photos/wedding_invite_front.png",
+    "title": "Wedding Invite Front",
+    "tags": ["portraits", "Wedding"]
+  }
+]
