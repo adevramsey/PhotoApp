@@ -1,0 +1,33 @@
+.navbar {
+  background-color: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  padding: 1rem 2rem;
+}
+
+.navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links {
+  flex: 1;
+  text-align: center;
+}
+
+.navbar a {
+  color: var(--text);
+  font-weight: 500;
+  margin: 0 0.75rem;
+}
+
+.navbar a.active {
+  font-weight: 700;
+}
+
+.theme-toggle {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--nav-border);
+}

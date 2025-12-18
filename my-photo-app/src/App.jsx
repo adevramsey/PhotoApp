@@ -1,22 +1,14 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import { routes } from "./router.jsx";
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
 
   return (
-    <div
-      style={{
-        backgroundColor: darkMode ? "#121212" : "#ffffff",
-        color: darkMode ? "#ffffff" : "#000000",
-        minHeight: "100vh"
-      }}
-    >
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+    <>
+      <Navbar />
 
       <main style={{ padding: "2rem" }}>
         <AnimatePresence mode="wait">
@@ -43,6 +35,6 @@ export default function App() {
           </Routes>
         </AnimatePresence>
       </main>
-    </div>
+    </>
   );
 }
