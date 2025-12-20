@@ -1,0 +1,1271 @@
+/* ============================================
+   ELENA PHOTOGRAPHY - ABOUT PAGE STYLES
+   Professional biography page with timeline, skills, and values
+   ============================================ */
+
+/* ============================================
+   CSS VARIABLES - Inherit from global design system
+   These variables should match your root styles
+   ============================================ */
+:root {
+  /* Brand Colors - Core palette for the site */
+  --color-primary: #1a1a1a;        /* Main dark color for text/backgrounds */
+  --color-secondary: #f8f9fa;      /* Light background color */
+  --color-accent: #d4a574;         /* Gold accent color */
+  --color-accent-light: #e6c9a8;   /* Lighter gold for hover states */
+  --color-accent-dark: #b8935f;    /* Darker gold for gradients */
+  
+  /* Text Colors - Hierarchy of text darkness */
+  --color-text: #2c2c2c;           /* Primary text color */
+  --color-text-light: #6b6b6b;     /* Secondary/muted text */
+  --color-text-lighter: #9ca3af;   /* Tertiary/disabled text */
+  
+  /* UI Colors */
+  --color-white: #ffffff;          /* Pure white */
+  --color-black: #000000;          /* Pure black */
+  --color-border: #e5e7eb;         /* Border color for dividers */
+  
+  /* Gradients - Pre-defined gradient combinations */
+  --gradient-gold: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+  --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+  --gradient-overlay: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+  
+  /* Shadows - Layered depth effects */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);      /* Small shadow */
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);     /* Medium shadow */
+  --shadow-lg: 0 12px 24px rgba(0,0,0,0.12);    /* Large shadow */
+  --shadow-xl: 0 20px 40px rgba(0,0,0,0.16);    /* Extra large shadow */
+  --shadow-2xl: 0 25px 50px rgba(0,0,0,0.25);   /* Maximum shadow */
+  
+  /* Transitions - Easing functions for smooth animations */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);    /* Quick state changes */
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);    /* Standard animations */
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);    /* Slow, elegant animations */
+  
+  /* Typography - Font families */
+  --font-display: 'Playfair Display', Georgia, serif;       /* Elegant headings */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; /* Body text */
+  
+  /* Spacing Scale - Consistent spacing system */
+  --space-xs: 0.5rem;    /* 8px - Extra small spacing */
+  --space-sm: 1rem;      /* 16px - Small spacing */
+  --space-md: 1.5rem;    /* 24px - Medium spacing */
+  --space-lg: 2rem;      /* 32px - Large spacing */
+  --space-xl: 3rem;      /* 48px - Extra large spacing */
+  --space-2xl: 4rem;     /* 64px - 2X large spacing */
+  --space-3xl: 6rem;     /* 96px - 3X large spacing */
+  
+  /* Border Radius - Rounded corner sizes */
+  --radius-sm: 8px;      /* Small radius */
+  --radius-md: 12px;     /* Medium radius */
+  --radius-lg: 16px;     /* Large radius */
+  --radius-xl: 24px;     /* Extra large radius */
+  --radius-full: 9999px; /* Fully rounded (pills/circles) */
+  
+  /* Layout - Maximum content width */
+  --max-width: 1400px;   /* Container max width */
+}
+
+/* ============================================
+   BASE LAYOUT - Page container
+   ============================================ */
+.about-page {
+  min-height: 100vh;                    /* Full viewport height minimum */
+  background: var(--color-secondary);   /* Light background color */
+  opacity: 0;                           /* Start invisible for fade-in animation */
+  animation: fadeIn 0.6s ease-out forwards; /* Fade in on page load */
+}
+
+/* Add 'loaded' class when page is ready - triggers animations */
+.about-page.loaded {
+  opacity: 1; /* Fully visible when loaded */
+}
+
+/* ============================================
+   HERO SECTION - Top banner with photo
+   ============================================ */
+.about-hero {
+  position: relative;           /* Needed for absolute positioned children */
+  min-height: 85vh;            /* 85% of viewport height */
+  display: flex;               /* Flexbox for centering content */
+  align-items: center;         /* Vertically center content */
+  justify-content: center;     /* Horizontally center content */
+  overflow: hidden;            /* Clip overflow for zoom effect */
+  color: var(--color-white);   /* White text over dark image */
+  margin-bottom: var(--space-3xl); /* Spacing below section */
+}
+
+/* Background image wrapper - contains the photo */
+.hero-image-wrapper {
+  position: absolute; /* Position behind content */
+  inset: 0;          /* Fill entire parent (top, right, bottom, left: 0) */
+  z-index: 0;        /* Behind overlay and content */
+}
+
+/* The actual hero image */
+.hero-image {
+  width: 100%;              /* Full width of container */
+  height: 100%;             /* Full height of container */
+  object-fit: cover;        /* Cover entire area, may crop */
+  object-position: center;  /* Center the image */
+  transition: transform var(--transition-slow); /* Smooth zoom animation */
+}
+
+/* Zoom effect on hover - subtle parallax feel */
+.about-hero:hover .hero-image {
+  transform: scale(1.05); /* Zoom in 5% on hover */
+}
+
+/* Dark gradient overlay - improves text readability */
+.hero-overlay {
+  position: absolute;                   /* Position over image */
+  inset: 0;                            /* Fill entire parent */
+  background: var(--gradient-overlay); /* Gradient from transparent to dark */
+  z-index: 1;                          /* Above image, below content */
+}
+
+/* Text content container - centered over image */
+.hero-content {
+  position: relative;              /* Position above overlay */
+  z-index: 2;                      /* Top layer */
+  text-align: center;              /* Center all text */
+  padding: var(--space-xl);        /* Padding around content */
+  max-width: 900px;                /* Maximum width for readability */
+  margin: 0 auto;                  /* Center horizontally */
+}
+
+/* Small label above main title - "About Me" */
+.hero-label {
+  display: inline-block;                    /* Inline but accepts padding */
+  padding: var(--space-xs) var(--space-md); /* Vertical and horizontal padding */
+  background: rgba(212, 165, 116, 0.2);     /* Semi-transparent gold background */
+  border: 1px solid rgba(212, 165, 116, 0.4); /* Semi-transparent gold border */
+  border-radius: var(--radius-full);        /* Fully rounded (pill shape) */
+  font-size: 0.875rem;                      /* 14px - Small text */
+  font-weight: 600;                         /* Semi-bold */
+  letter-spacing: 1.5px;                    /* Spread letters for elegance */
+  text-transform: uppercase;                /* ALL CAPS */
+  color: var(--color-accent);               /* Gold text */
+  margin-bottom: var(--space-lg);           /* Space below */
+  backdrop-filter: blur(10px);              /* Blur background behind label */
+  animation: slideDown 0.8s ease-out 0.2s both; /* Animate entrance */
+}
+
+/* Main hero title - "Elena Ramsey" */
+.hero-title {
+  font-family: var(--font-display);         /* Elegant serif font */
+  font-size: clamp(3rem, 6vw, 5rem);        /* Responsive: 3rem min, 5rem max, 6vw preferred */
+  font-weight: 700;                         /* Bold */
+  line-height: 1.1;                         /* Tight line height for impact */
+  margin-bottom: var(--space-md);           /* Space below */
+  letter-spacing: -0.02em;                  /* Slight negative letter spacing */
+  animation: slideUp 0.8s ease-out 0.3s both; /* Animate entrance */
+}
+
+/* Subtitle - "Professional Photographer" */
+.hero-subtitle {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);  /* Responsive sizing */
+  font-weight: 500;                         /* Medium weight */
+  margin-bottom: var(--space-md);           /* Space below */
+  color: rgba(255, 255, 255, 0.95);        /* Slightly transparent white */
+  animation: slideUp 0.8s ease-out 0.4s both; /* Animate entrance */
+}
+
+/* Description paragraph - longer bio text */
+.hero-description {
+  font-size: clamp(1rem, 2vw, 1.125rem);    /* Responsive sizing */
+  line-height: 1.7;                         /* Comfortable reading height */
+  color: rgba(255, 255, 255, 0.9);         /* Slightly transparent white */
+  max-width: 700px;                         /* Maximum width for readability */
+  margin: 0 auto var(--space-xl);           /* Center and space below */
+  animation: slideUp 0.8s ease-out 0.5s both; /* Animate entrance */
+}
+
+/* Button container - holds action buttons */
+.hero-actions {
+  display: flex;                 /* Flexbox layout */
+  gap: var(--space-md);         /* Space between buttons */
+  justify-content: center;      /* Center buttons */
+  flex-wrap: wrap;              /* Wrap on small screens */
+  animation: slideUp 0.8s ease-out 0.6s both; /* Animate entrance */
+}
+
+/* ============================================
+   BUTTONS - Reusable button styles
+   ============================================ */
+/* Base styles for both primary and secondary buttons */
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;              /* Flex for icon alignment */
+  align-items: center;               /* Vertically center content */
+  gap: var(--space-sm);             /* Space between text and icon */
+  padding: 1rem 2rem;               /* Vertical and horizontal padding */
+  border: none;                     /* Remove default border */
+  border-radius: var(--radius-full); /* Fully rounded */
+  font-size: 1rem;                  /* 16px base size */
+  font-weight: 600;                 /* Semi-bold */
+  cursor: pointer;                  /* Show pointer on hover */
+  transition: all var(--transition-base); /* Smooth transitions */
+  position: relative;               /* For pseudo-element positioning */
+  overflow: hidden;                 /* Clip overflow for effects */
+}
+
+/* Primary button - gold gradient background */
+.btn-primary {
+  background: var(--gradient-gold);              /* Gold gradient */
+  color: var(--color-white);                     /* White text */
+  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.4); /* Gold shadow */
+}
+
+/* Shine effect overlay - creates gloss appearance */
+.btn-primary::before {
+  content: '';                       /* Empty content for pseudo-element */
+  position: absolute;                /* Position over button */
+  inset: 0;                         /* Fill entire button */
+  background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent); /* White gradient */
+  opacity: 0;                       /* Start invisible */
+  transition: opacity var(--transition-base); /* Fade in on hover */
+}
+
+/* Hover state - lift button and brighten shadow */
+.btn-primary:hover {
+  transform: translateY(-2px);                   /* Lift 2px upward */
+  box-shadow: 0 8px 24px rgba(212, 165, 116, 0.5); /* Larger, brighter shadow */
+}
+
+/* Show shine effect on hover */
+.btn-primary:hover::before {
+  opacity: 1; /* Make shine visible */
+}
+
+/* Arrow icon animation on hover */
+.btn-primary:hover svg {
+  transform: translateX(4px); /* Move arrow right 4px */
+}
+
+/* SVG icon transition */
+.btn-primary svg {
+  transition: transform var(--transition-base); /* Smooth arrow movement */
+}
+
+/* Secondary button - transparent with border */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);     /* Semi-transparent white */
+  color: var(--color-white);                /* White text */
+  border: 2px solid rgba(255, 255, 255, 0.3); /* Semi-transparent border */
+  backdrop-filter: blur(10px);              /* Blur background behind button */
+}
+
+/* Secondary button hover - brighten background */
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);     /* Brighter background */
+  border-color: rgba(255, 255, 255, 0.5);   /* Brighter border */
+  transform: translateY(-2px);              /* Lift button */
+}
+
+/* ============================================
+   STORY SECTION - Biography with image
+   ============================================ */
+.story-section {
+  padding: var(--space-3xl) var(--space-lg); /* Large padding top/bottom */
+  background: var(--color-white);            /* White background */
+}
+
+/* Story content container - grid layout */
+.story-content {
+  max-width: var(--max-width);   /* Maximum width */
+  margin: 0 auto;                /* Center horizontally */
+  display: grid;                 /* Grid layout */
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: var(--space-3xl);         /* Large gap between columns */
+  align-items: center;           /* Vertically center items */
+}
+
+/* Left column - text content */
+.story-text {
+  padding-right: var(--space-lg); /* Extra padding on right */
+}
+
+/* Small section label - "My Story" */
+.section-label {
+  display: inline-block;              /* Inline but accepts padding */
+  padding: var(--space-xs) var(--space-md); /* Vertical and horizontal padding */
+  background: var(--color-secondary); /* Light gray background */
+  color: var(--color-accent);         /* Gold text */
+  border-radius: var(--radius-full);  /* Fully rounded */
+  font-size: 0.875rem;                /* 14px */
+  font-weight: 600;                   /* Semi-bold */
+  text-transform: uppercase;          /* ALL CAPS */
+  letter-spacing: 1px;                /* Spread letters */
+  margin-bottom: var(--space-md);     /* Space below */
+}
+
+/* Section title - large heading */
+.section-title {
+  font-family: var(--font-display);       /* Elegant serif font */
+  font-size: clamp(2rem, 4vw, 3rem);      /* Responsive sizing */
+  font-weight: 700;                       /* Bold */
+  color: var(--color-text);               /* Dark text */
+  margin-bottom: var(--space-lg);         /* Space below */
+  line-height: 1.2;                       /* Tight line height */
+  letter-spacing: -0.01em;                /* Slight negative spacing */
+}
+
+/* Container for multiple paragraphs */
+.story-paragraphs {
+  display: flex;                    /* Flexbox layout */
+  flex-direction: column;           /* Stack vertically */
+  gap: var(--space-md);            /* Space between paragraphs */
+}
+
+/* Individual paragraph styling */
+.story-paragraphs p {
+  font-size: 1.0625rem;             /* 17px - Slightly larger than base */
+  line-height: 1.7;                 /* Comfortable reading height */
+  color: var(--color-text-light);   /* Gray text */
+}
+
+/* Right column - featured image */
+.story-image {
+  position: relative; /* For absolute positioned children */
+}
+
+/* Image frame - adds border and shadow */
+.image-frame {
+  position: relative;               /* For quote overlay */
+  border-radius: var(--radius-lg);  /* Rounded corners */
+  overflow: hidden;                 /* Clip content to border radius */
+  box-shadow: var(--shadow-xl);     /* Large shadow */
+}
+
+/* The actual image */
+.image-frame img {
+  width: 100%;                      /* Full width */
+  height: 100%;                     /* Full height */
+  object-fit: cover;                /* Cover area, may crop */
+  display: block;                   /* Remove inline spacing */
+  transition: transform var(--transition-slow); /* Smooth zoom */
+}
+
+/* Zoom image on hover */
+.image-frame:hover img {
+  transform: scale(1.05); /* Zoom in 5% */
+}
+
+/* Quote overlay - decorative text on image */
+.image-quote {
+  position: absolute;                   /* Position over image */
+  bottom: 0;                           /* Anchor to bottom */
+  left: 0;                             /* Anchor to left */
+  right: 0;                            /* Anchor to right */
+  padding: var(--space-xl);            /* Large padding */
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); /* Dark gradient */
+  color: var(--color-white);           /* White text */
+}
+
+/* Quote icon - decorative quotation marks */
+.quote-icon {
+  color: var(--color-accent);          /* Gold color */
+  margin-bottom: var(--space-sm);      /* Space below */
+  opacity: 0.5;                        /* Semi-transparent */
+}
+
+/* Quote text */
+.image-quote p {
+  font-family: var(--font-display);    /* Elegant serif */
+  font-size: 1.25rem;                  /* 20px */
+  font-style: italic;                  /* Italic style */
+  line-height: 1.5;                    /* Comfortable height */
+  margin: 0;                           /* Remove default margin */
+}
+
+/* ============================================
+   TIMELINE SECTION - Career milestones
+   ============================================ */
+.timeline-section {
+  padding: var(--space-3xl) var(--space-lg); /* Large padding */
+  background: var(--color-secondary);         /* Light gray background */
+}
+
+/* Timeline header - centered title and description */
+.timeline-header {
+  text-align: center;              /* Center text */
+  max-width: 800px;                /* Maximum width */
+  margin: 0 auto var(--space-3xl); /* Center and space below */
+}
+
+/* Timeline description text */
+.section-description {
+  font-size: 1.125rem;              /* 18px */
+  color: var(--color-text-light);   /* Gray text */
+  line-height: 1.6;                 /* Comfortable height */
+}
+
+/* Timeline container - vertical line with items */
+.timeline {
+  max-width: 900px;                 /* Maximum width */
+  margin: 0 auto;                   /* Center horizontally */
+  position: relative;               /* For vertical line */
+  padding: var(--space-lg) 0;       /* Vertical padding */
+}
+
+/* Vertical timeline line - connects all items */
+.timeline::before {
+  content: '';                      /* Empty content for pseudo-element */
+  position: absolute;               /* Position in timeline */
+  left: 50%;                        /* Center horizontally */
+  transform: translateX(-50%);      /* Adjust for line width */
+  top: 0;                          /* Start at top */
+  bottom: 0;                       /* End at bottom */
+  width: 3px;                      /* Line thickness */
+  background: var(--color-border); /* Light gray color */
+}
+
+/* Individual timeline item - one milestone */
+.timeline-item {
+  display: grid;                         /* Grid layout */
+  grid-template-columns: 1fr auto 1fr;   /* Three columns: year, dot, content */
+  gap: var(--space-xl);                  /* Space between columns */
+  align-items: center;                   /* Vertically center */
+  margin-bottom: var(--space-2xl);       /* Space below each item */
+  position: relative;                    /* For z-index */
+  animation: fadeInUp 0.6s ease-out both; /* Entrance animation */
+}
+
+/* Timeline year badge - large number on left */
+.timeline-year {
+  text-align: right;                   /* Right-align text */
+  font-family: var(--font-display);    /* Elegant serif */
+  font-size: 3rem;                     /* 48px - Very large */
+  font-weight: 700;                    /* Bold */
+  color: var(--color-accent);          /* Gold color */
+  line-height: 1;                      /* No extra line height */
+  opacity: 0.8;                        /* Slightly transparent */
+}
+
+/* Timeline dot - connects item to vertical line */
+.timeline-dot {
+  width: 20px;                         /* Dot width */
+  height: 20px;                        /* Dot height */
+  border-radius: 50%;                  /* Perfect circle */
+  background: var(--gradient-gold);    /* Gold gradient */
+  border: 4px solid var(--color-white); /* White border */
+  box-shadow: var(--shadow-md);        /* Medium shadow */
+  position: relative;                  /* For z-index */
+  z-index: 2;                          /* Above timeline line */
+}
+
+/* Timeline content card - holds title and description */
+.timeline-content {
+  background: var(--color-white);      /* White background */
+  padding: var(--space-lg);            /* Padding inside */
+  border-radius: var(--radius-lg);     /* Rounded corners */
+  box-shadow: var(--shadow-sm);        /* Small shadow */
+  transition: all var(--transition-base); /* Smooth transitions */
+}
+
+/* Hover effect - lift card and brighten shadow */
+.timeline-content:hover {
+  transform: translateY(-4px);        /* Lift 4px */
+  box-shadow: var(--shadow-lg);       /* Larger shadow */
+}
+
+/* Timeline content title */
+.timeline-content h3 {
+  font-size: 1.5rem;                  /* 24px */
+  font-weight: 600;                   /* Semi-bold */
+  color: var(--color-text);           /* Dark text */
+  margin-bottom: var(--space-sm);     /* Space below */
+}
+
+/* Timeline content description */
+.timeline-content p {
+  font-size: 1rem;                    /* 16px */
+  line-height: 1.6;                   /* Comfortable height */
+  color: var(--color-text-light);     /* Gray text */
+  margin: 0;                          /* Remove default margin */
+}
+
+/* ============================================
+   SKILLS SECTION - Expertise bars
+   ============================================ */
+.skills-section {
+  padding: var(--space-3xl) var(--space-lg); /* Large padding */
+  background: var(--color-white);            /* White background */
+}
+
+/* Skills header - centered title */
+.skills-header {
+  text-align: center;              /* Center text */
+  max-width: 800px;                /* Maximum width */
+  margin: 0 auto var(--space-2xl); /* Center and space below */
+}
+
+/* Skills grid - multiple columns */
+.skills-grid {
+  max-width: var(--max-width);                        /* Maximum width */
+  margin: 0 auto;                                     /* Center horizontally */
+  display: grid;                                      /* Grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+  gap: var(--space-xl);                               /* Space between items */
+}
+
+/* Individual skill item */
+.skill-item {
+  background: var(--color-secondary);  /* Light gray background */
+  padding: var(--space-lg);           /* Padding inside */
+  border-radius: var(--radius-lg);    /* Rounded corners */
+  transition: all var(--transition-base); /* Smooth transitions */
+  animation: fadeInUp 0.5s ease-out both; /* Entrance animation */
+}
+
+/* Hover effect - lift and shadow */
+.skill-item:hover {
+  transform: translateY(-4px);       /* Lift 4px */
+  box-shadow: var(--shadow-md);      /* Medium shadow */
+}
+
+/* Skill header - icon and name */
+.skill-header {
+  display: flex;                     /* Flexbox layout */
+  align-items: center;               /* Vertically center */
+  gap: var(--space-sm);             /* Space between icon and name */
+  margin-bottom: var(--space-md);   /* Space below */
+}
+
+/* Skill icon - emoji */
+.skill-icon {
+  font-size: 1.5rem;                 /* 24px - Large emoji */
+}
+
+/* Skill name text */
+.skill-name {
+  font-size: 1.125rem;               /* 18px */
+  font-weight: 600;                  /* Semi-bold */
+  color: var(--color-text);          /* Dark text */
+}
+
+/* Progress bar container - gray background */
+.skill-bar-container {
+  width: 100%;                       /* Full width */
+  height: 8px;                       /* Bar height */
+  background: rgba(0, 0, 0, 0.1);   /* Light gray */
+  border-radius: var(--radius-full); /* Fully rounded */
+  overflow: hidden;                  /* Clip overflow */
+  margin-bottom: var(--space-sm);    /* Space below */
+}
+
+/* Progress bar fill - gold bar showing proficiency */
+.skill-bar-fill {
+  height: 100%;                      /* Full height of container */
+  background: var(--gradient-gold);  /* Gold gradient */
+  border-radius: var(--radius-full); /* Fully rounded */
+  transition: width 1s ease-out;     /* Smooth width animation */
+  animation: fillBar 1s ease-out both; /* Entrance animation */
+}
+
+/* Percentage text - shows numeric value */
+.skill-percentage {
+  display: block;                    /* Block element */
+  text-align: right;                 /* Right-align number */
+  font-size: 0.875rem;               /* 14px */
+  font-weight: 600;                  /* Semi-bold */
+  color: var(--color-accent);        /* Gold color */
+}
+
+/* ============================================
+   EXPERIENCE TABS SECTION - Tabbed content
+   ============================================ */
+.experience-section {
+  padding: var(--space-3xl) var(--space-lg); /* Large padding */
+  background: var(--color-secondary);         /* Light gray background */
+  max-width: var(--max-width);                /* Maximum width */
+  margin: 0 auto;                             /* Center horizontally */
+}
+
+/* Tab navigation - buttons to switch tabs */
+.tabs-nav {
+  display: flex;                     /* Flexbox layout */
+  gap: var(--space-sm);             /* Space between tabs */
+  justify-content: center;          /* Center tabs */
+  margin-bottom: var(--space-xl);   /* Space below */
+  flex-wrap: wrap;                  /* Wrap on small screens */
+}
+
+/* Individual tab button */
+.tab-btn {
+  display: flex;                         /* Flexbox for icon + text */
+  align-items: center;                   /* Vertically center */
+  gap: var(--space-xs);                 /* Small space between icon and text */
+  padding: var(--space-md) var(--space-xl); /* Padding inside */
+  background: var(--color-white);        /* White background */
+  border: 2px solid var(--color-border); /* Light border */
+  border-radius: var(--radius-full);     /* Fully rounded */
+  font-size: 1rem;                       /* 16px */
+  font-weight: 600;                      /* Semi-bold */
+  color: var(--color-text-light);        /* Gray text (inactive) */
+  cursor: pointer;                       /* Pointer cursor */
+  transition: all var(--transition-base); /* Smooth transitions */
+}
+
+/* Tab button hover effect */
+.tab-btn:hover {
+  border-color: var(--color-accent);     /* Gold border */
+  color: var(--color-accent);            /* Gold text */
+}
+
+/* Active tab - currently selected */
+.tab-btn.active {
+  background: var(--gradient-gold);      /* Gold gradient background */
+  color: var(--color-white);             /* White text */
+  border-color: transparent;             /* No border */
+  box-shadow: var(--shadow-md);          /* Medium shadow */
+}
+
+/* Tab icon emoji */
+.tab-icon {
+  font-size: 1.25rem;                    /* 20px */
+}
+
+/* Tab content container - holds panel content */
+.tabs-content {
+  background: var(--color-white);        /* White background */
+  padding: var(--space-2xl);             /* Large padding */
+  border-radius: var(--radius-lg);       /* Rounded corners */
+  box-shadow: var(--shadow-sm);          /* Small shadow */
+  min-height: 400px;                     /* Minimum height prevents jumping */
+}
+
+/* Individual tab panel - content for one tab */
+.tab-panel {
+  animation: fadeIn 0.3s ease-out; /* Fade in when switching tabs */
+}
+
+/* Tab panel heading */
+.tab-panel h3 {
+  font-family: var(--font-display);      /* Elegant serif */
+  font-size: 2rem;                       /* 32px */
+  font-weight: 700;                      /* Bold */
+  color: var(--color-text);              /* Dark text */
+  margin-bottom: var(--space-lg);        /* Space below */
+}
+
+/* Tab panel paragraphs */
+.tab-panel p {
+  font-size: 1.0625rem;                  /* 17px */
+  line-height: 1.7;                      /* Comfortable height */
+  color: var(--color-text-light);        /* Gray text */
+  margin-bottom: var(--space-md);        /* Space below */
+}
+
+/* Approach list - bulleted list with custom styling */
+.approach-list {
+  list-style: none;                      /* Remove default bullets */
+  padding: 0;                            /* Remove default padding */
+  margin: var(--space-lg) 0;             /* Vertical margin */
+}
+
+/* Approach list items */
+.approach-list li {
+  padding-left: var(--space-xl);         /* Indent text */
+  margin-bottom: var(--space-md);        /* Space below */
+  position: relative;                    /* For custom bullet */
+  font-size: 1.0625rem;                  /* 17px */
+  line-height: 1.7;                      /* Comfortable height */
+  color: var(--color-text-light);        /* Gray text */
+}
+
+/* Custom bullet - gold checkmark */
+.approach-list li::before {
+  content: '✓';                          /* Checkmark character */
+  position: absolute;                    /* Position at start of line */
+  left: 0;                              /* Align to left */
+  color: var(--color-accent);            /* Gold color */
+  font-weight: 700;                      /* Bold */
+  font-size: 1.25rem;                    /* Larger than text */
+}
+
+/* Strong text in list items */
+.approach-list li strong {
+  color: var(--color-text);              /* Dark text for emphasis */
+}
+
+/* Equipment grid - multiple columns for gear categories */
+.equipment-grid {
+  display: grid;                                      /* Grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: var(--space-lg);                               /* Space between columns */
+  margin: var(--space-lg) 0;                          /* Vertical margin */
+}
+
+/* Equipment category - one type of gear */
+.equipment-category {
+  background: var(--color-secondary);    /* Light gray background */
+  padding: var(--space-lg);             /* Padding inside */
+  border-radius: var(--radius-md);      /* Rounded corners */
+  border-left: 4px solid var(--color-accent); /* Gold left border accent */
+}
+
+/* Equipment category heading */
+.equipment-category h4 {
+  font-size: 1.25rem;                    /* 20px */
+  font-weight: 700;                      /* Bold */
+  color: var(--color-text);              /* Dark text */
+  margin-bottom: var(--space-sm);        /* Space below */
+}
+
+/* Equipment list */
+.equipment-category ul {
+  list-style: none;                      /* Remove default bullets */
+  padding: 0;                            /* Remove default padding */
+  margin: 0;                             /* Remove default margin */
+}
+
+/* Equipment list items */
+.equipment-category li {
+  padding: var(--space-xs) 0;            /* Vertical padding */
+  font-size: 0.9375rem;                  /* 15px */
+  color: var(--color-text-light);        /* Gray text */
+  border-bottom: 1px solid var(--color-border); /* Divider line */
+}
+
+/* Remove border from last item */
+.equipment-category li:last-child {
+  border-bottom: none;
+}
+
+/* Equipment note - disclaimer text */
+.equipment-note {
+  font-size: 0.875rem;                   /* 14px - Small text */
+  color: var(--color-text-lighter);      /* Light gray text */
+  font-style: italic;                    /* Italic style */
+  margin-top: var(--space-lg);           /* Space above */
+}
+
+/* ============================================
+   VALUES SECTION - Core principles
+   ============================================ */
+.values-section {
+  padding: var(--space-3xl) var(--space-lg); /* Large padding */
+  background: var(--color-white);            /* White background */
+}
+
+/* Values header - centered title */
+.values-header {
+  text-align: center;              /* Center text */
+  max-width: 800px;                /* Maximum width */
+  margin: 0 auto var(--space-2xl); /* Center and space below */
+}
+
+/* Values grid - card layout */
+.values-grid {
+  max-width: var(--max-width);                        /* Maximum width */
+  margin: 0 auto;                                     /* Center horizontally */
+  display: grid;                                      /* Grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */
+  gap: var(--space-xl);                               /* Space between cards */
+}
+
+/* Individual value card */
+.value-card {
+  background: var(--color-secondary);    /* Light gray background */
+  padding: var(--space-xl);             /* Large padding */
+  border-radius: var(--radius-lg);      /* Rounded corners */
+  text-align: center;                   /* Center text */
+  transition: all var(--transition-base); /* Smooth transitions */
+  animation: fadeInUp 0.5s ease-out both; /* Entrance animation */
+}
+
+/* Value card hover effect */
+.value-card:hover {
+  transform: translateY(-8px);          /* Lift 8px */
+  box-shadow: var(--shadow-lg);         /* Large shadow */
+}
+
+/* Value icon - large emoji */
+.value-icon {
+  font-size: 4rem;                      /* 64px - Very large */
+  margin-bottom: var(--space-md);       /* Space below */
+  filter: grayscale(0.2);               /* Slight desaturation */
+}
+
+/* Value title */
+.value-title {
+  font-size: 1.5rem;                    /* 24px */
+  font-weight: 700;                     /* Bold */
+  color: var(--color-text);             /* Dark text */
+  margin-bottom: var(--space-sm);       /* Space below */
+}
+
+/* Value description */
+.value-description {
+  font-size: 1rem;                      /* 16px */
+  line-height: 1.6;                     /* Comfortable height */
+  color: var(--color-text-light);       /* Gray text */
+  margin: 0;                            /* Remove default margin */
+}
+
+/* ============================================
+   AWARDS SECTION - Recognition badges
+   ============================================ */
+.awards-section {
+  padding: var(--space-3xl) var(--space-lg); /* Large padding */
+  background: var(--gradient-dark);           /* Dark gradient background */
+  color: var(--color-white);                  /* White text */
+}
+
+/* Awards content container */
+.awards-content {
+  max-width: var(--max-width);   /* Maximum width */
+  margin: 0 auto;                /* Center horizontally */
+  text-align: center;            /* Center text */
+}
+
+/* Override section label color for dark background */
+.awards-section .section-label {
+  background: rgba(212, 165, 116, 0.2);     /* Semi-transparent gold */
+  color: var(--color-accent);                /* Gold text */
+  border: 1px solid rgba(212, 165, 116, 0.4); /* Gold border */
+}
+
+/* Override section title color for dark background */
+.awards-section .section-title {
+  color: var(--color-white);     /* White text */
+  margin-bottom: var(--space-3xl); /* Extra space below */
+}
+
+/* Awards grid - multiple columns */
+.awards-grid {
+  display: grid;                                      /* Grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: var(--space-xl);                               /* Space between items */
+}
+
+/* Individual award item */
+.award-item {
+  background: rgba(255, 255, 255, 0.05); /* Semi-transparent white */
+  padding: var(--space-xl);              /* Large padding */
+  border-radius: var(--radius-lg);       /* Rounded corners */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Light border */
+  transition: all var(--transition-base); /* Smooth transitions */
+  backdrop-filter: blur(10px);           /* Blur background */
+}
+
+/* Award item hover effect */
+.award-item:hover {
+  background: rgba(255, 255, 255, 0.1);  /* Brighter background */
+  border-color: var(--color-accent);     /* Gold border */
+  transform: translateY(-4px);           /* Lift 4px */
+}
+
+/* Award icon - emoji */
+.award-icon {
+  font-size: 3rem;                       /* 48px - Large */
+  margin-bottom: var(--space-md);        /* Space below */
+}
+
+/* Award item heading */
+.award-item h4 {
+  font-size: 1.25rem;                    /* 20px */
+  font-weight: 700;                      /* Bold */
+  color: var(--color-white);             /* White text */
+  margin-bottom: var(--space-xs);        /* Small space below */
+}
+
+/* Award item description */
+.award-item p {
+  font-size: 0.9375rem;                  /* 15px */
+  color: rgba(255, 255, 255, 0.7);      /* Semi-transparent white */
+  margin: 0;                             /* Remove default margin */
+}
+
+/* ============================================
+   CTA SECTION - Final call-to-action
+   ============================================ */
+.cta-section {
+  padding: var(--space-3xl) var(--space-lg); /* Large padding */
+  background: var(--color-secondary);         /* Light gray background */
+  text-align: center;                         /* Center text */
+}
+
+/* CTA content container */
+.cta-content {
+  max-width: 800px;              /* Maximum width */
+  margin: 0 auto;                /* Center horizontally */
+}
+
+/* CTA title - large heading */
+.cta-title {
+  font-family: var(--font-display);       /* Elegant serif */
+  font-size: clamp(2rem, 4vw, 3rem);      /* Responsive sizing */
+  font-weight: 700;                       /* Bold */
+  color: var(--color-text);               /* Dark text */
+  margin-bottom: var(--space-md);         /* Space below */
+  line-height: 1.2;                       /* Tight line height */
+}
+
+/* CTA description paragraph */
+.cta-description {
+  font-size: 1.125rem;               /* 18px */
+  line-height: 1.7;                  /* Comfortable height */
+  color: var(--color-text-light);    /* Gray text */
+  margin-bottom: var(--space-xl);    /* Space below */
+}
+
+/* CTA action buttons container */
+.cta-actions {
+  display: flex;                     /* Flexbox layout */
+  gap: var(--space-md);             /* Space between buttons */
+  justify-content: center;          /* Center buttons */
+  flex-wrap: wrap;                  /* Wrap on small screens */
+  margin-bottom: var(--space-xl);   /* Space below */
+}
+
+/* Primary CTA button - gold gradient */
+.btn-cta-primary {
+  display: inline-flex;                  /* Flex for icon alignment */
+  align-items: center;                   /* Vertically center */
+  gap: var(--space-sm);                 /* Space between text and icon */
+  padding: 1.25rem 2.5rem;              /* Large padding */
+  background: var(--gradient-gold);      /* Gold gradient */
+  color: var(--color-white);             /* White text */
+  border: none;                          /* No border */
+  border-radius: var(--radius-full);     /* Fully rounded */
+  font-size: 1.125rem;                   /* 18px */
+  font-weight: 600;                      /* Semi-bold */
+  cursor: pointer;                       /* Pointer cursor */
+  transition: all var(--transition-base); /* Smooth transitions */
+  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.4); /* Gold shadow */
+}
+
+/* Primary CTA button hover */
+.btn-cta-primary:hover {
+  transform: translateY(-4px);                   /* Lift 4px */
+  box-shadow: 0 8px 24px rgba(212, 165, 116, 0.5); /* Larger shadow */
+}
+
+/* Arrow icon animation on hover */
+.btn-cta-primary:hover svg {
+  transform: translateX(6px);                    /* Move right 6px */
+}
+
+/* SVG icon transition */
+.btn-cta-primary svg {
+  transition: transform var(--transition-base);  /* Smooth movement */
+}
+
+/* Secondary CTA button - outlined */
+.btn-cta-secondary {
+  padding: 1.25rem 2.5rem;              /* Large padding */
+  background: transparent;               /* Transparent background */
+  color: var(--color-text);             /* Dark text */
+  border: 2px solid var(--color-border); /* Light border */
+  border-radius: var(--radius-full);     /* Fully rounded */
+  font-size: 1.125rem;                   /* 18px */
+  font-weight: 600;                      /* Semi-bold */
+  cursor: pointer;                       /* Pointer cursor */
+  transition: all var(--transition-base); /* Smooth transitions */
+}
+
+/* Secondary CTA button hover */
+.btn-cta-secondary:hover {
+  background: var(--color-white);        /* White background */
+  border-color: var(--color-accent);     /* Gold border */
+  color: var(--color-accent);            /* Gold text */
+  transform: translateY(-2px);           /* Lift 2px */
+  box-shadow: var(--shadow-md);          /* Medium shadow */
+}
+
+/* CTA badges - social proof indicators */
+.cta-badges {
+  display: flex;                         /* Flexbox layout */
+  gap: var(--space-lg);                 /* Space between badges */
+  justify-content: center;              /* Center badges */
+  flex-wrap: wrap;                      /* Wrap on small screens */
+}
+
+/* Individual badge */
+.badge {
+  display: flex;                         /* Flexbox for icon + text */
+  align-items: center;                   /* Vertically center */
+  gap: var(--space-xs);                 /* Small space between icon and text */
+  padding: var(--space-sm) var(--space-md); /* Padding inside */
+  background: var(--color-white);        /* White background */
+  border-radius: var(--radius-full);     /* Fully rounded */
+  box-shadow: var(--shadow-sm);          /* Small shadow */
+  font-size: 0.9375rem;                  /* 15px */
+  color: var(--color-text-light);        /* Gray text */
+}
+
+/* Badge icon - checkmark */
+.badge-icon {
+  width: 24px;                           /* Fixed width */
+  height: 24px;                          /* Fixed height */
+  display: flex;                         /* Flex for centering */
+  align-items: center;                   /* Vertically center */
+  justify-content: center;               /* Horizontally center */
+  background: var(--gradient-gold);      /* Gold gradient */
+  color: var(--color-white);             /* White text */
+  border-radius: 50%;                    /* Perfect circle */
+  font-size: 0.75rem;                    /* 12px */
+  font-weight: 700;                      /* Bold */
+}
+
+/* ============================================
+   ANIMATIONS - Keyframe definitions
+   ============================================ */
+
+/* Fade in - opacity 0 to 1 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;                          /* Start invisible */
+  }
+  to {
+    opacity: 1;                          /* End fully visible */
+  }
+}
+
+/* Slide down - from above */
+@keyframes slideDown {
+  from {
+    opacity: 0;                          /* Start invisible */
+    transform: translateY(-30px);        /* Start 30px above */
+  }
+  to {
+    opacity: 1;                          /* End fully visible */
+    transform: translateY(0);            /* End at normal position */
+  }
+}
+
+/* Slide up - from below */
+@keyframes slideUp {
+  from {
+    opacity: 0;                          /* Start invisible */
+    transform: translateY(30px);         /* Start 30px below */
+  }
+  to {
+    opacity: 1;                          /* End fully visible */
+    transform: translateY(0);            /* End at normal position */
+  }
+}
+
+/* Fade in and slide up - combined effect */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;                          /* Start invisible */
+    transform: translateY(40px);         /* Start 40px below */
+  }
+  to {
+    opacity: 1;                          /* End fully visible */
+    transform: translateY(0);            /* End at normal position */
+  }
+}
+
+/* Fill bar - progress bar animation */
+@keyframes fillBar {
+  from {
+    width: 0;                            /* Start at 0 width */
+  }
+  /* Width is set inline via style attribute */
+}
+
+/* Rotate - continuous rotation for decorative elements */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);             /* Start at 0 degrees */
+  }
+  to {
+    transform: rotate(360deg);           /* End at 360 degrees (full rotation) */
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - Mobile/Tablet adjustments
+   ============================================ */
+
+/* Tablet size (1024px and below) */
+@media (max-width: 1024px) {
+  /* Story section - stack columns vertically */
+  .story-content {
+    grid-template-columns: 1fr;          /* Single column */
+    gap: var(--space-xl);                /* Reduced gap */
+  }
+
+  /* Remove extra padding on story text */
+  .story-text {
+    padding-right: 0;
+  }
+
+  /* Timeline - adjust for smaller screens */
+  .timeline-item {
+    grid-template-columns: auto auto 1fr; /* Smaller year column */
+    gap: var(--space-md);                 /* Reduced gap */
+  }
+
+  .timeline-year {
+    font-size: 2rem;                     /* Smaller year number */
+  }
+}
+
+/* Mobile size (768px and below) */
+@media (max-width: 768px) {
+  /* Hero section - reduce height */
+  .about-hero {
+    min-height: 70vh;                    /* Shorter on mobile */
+  }
+
+  /* Hero content - reduce padding */
+  .hero-content {
+    padding: var(--space-lg);
+  }
+
+  /* Hero actions - stack buttons vertically */
+  .hero-actions {
+    flex-direction: column;              /* Stack vertically */
+    width: 100%;                         /* Full width */
+  }
+
+  /* Make buttons full width */
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;                         /* Full width */
+    justify-content: center;             /* Center content */
+  }
+
+  /* Timeline - simpler layout for mobile */
+  .timeline::before {
+    left: 30px;                          /* Move line to left side */
+  }
+
+  .timeline-item {
+    grid-template-columns: 1fr;          /* Single column */
+    gap: var(--space-sm);                /* Reduced gap */
+    padding-left: 60px;                  /* Indent for line */
+  }
+
+  .timeline-year {
+    text-align: left;                    /* Left-align year */
+    font-size: 1.5rem;                   /* Smaller year */
+  }
+
+  .timeline-dot {
+    position: absolute;                  /* Position on left side */
+    left: 20px;                          /* Fixed position */
+  }
+
+  /* Skills grid - single column on mobile */
+  .skills-grid {
+    grid-template-columns: 1fr;          /* Single column */
+  }
+
+  /* Values grid - single column on mobile */
+  .values-grid {
+    grid-template-columns: 1fr;          /* Single column */
+  }
+
+  /* Equipment grid - single column on mobile */
+  .equipment-grid {
+    grid-template-columns: 1fr;          /* Single column */
+  }
+
+  /* Awards grid - single column on mobile */
+  .awards-grid {
+    grid-template-columns: 1fr;          /* Single column */
+  }
+
+  /* Tab buttons - full width on mobile */
+  .tabs-nav {
+    flex-direction: column;              /* Stack vertically */
+  }
+
+  .tab-btn {
+    width: 100%;                         /* Full width */
+    justify-content: center;             /* Center content */
+  }
+
+  /* Tab content - reduce padding */
+  .tabs-content {
+    padding: var(--space-lg);
+  }
+
+  /* CTA actions - stack buttons */
+  .cta-actions {
+    flex-direction: column;              /* Stack vertically */
+    width: 100%;                         /* Full width */
+  }
+
+  .btn-cta-primary,
+  .btn-cta-secondary {
+    width: 100%;                         /* Full width */
+    justify-content: center;             /* Center content */
+  }
+
+  /* CTA badges - stack badges */
+  .cta-badges {
+    flex-direction: column;              /* Stack vertically */
+    align-items: center;                 /* Center items */
+  }
+}
+
+/* Small mobile (480px and below) */
+@media (max-width: 480px) {
+  /* Reduce section padding */
+  .story-section,
+  .timeline-section,
+  .skills-section,
+  .experience-section,
+  .values-section,
+  .awards-section,
+  .cta-section {
+    padding: var(--space-xl) var(--space-md); /* Reduced padding */
+  }
+
+  /* Hero label - smaller text */
+  .hero-label {
+    font-size: 0.75rem;                  /* Smaller */
+    padding: 0.375rem var(--space-sm);   /* Reduced padding */
+  }
+
+  /* Section labels - smaller */
+  .section-label {
+    font-size: 0.75rem;                  /* Smaller */
+  }
+
+  /* Reduce timeline padding */
+  .timeline-item {
+    padding-left: 50px;                  /* Less indent */
+  }
+
+  .timeline-dot {
+    left: 15px;                          /* Closer to edge */
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY - Motion and focus
+   ============================================ */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations for users who prefer reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;      /* Nearly instant */
+    animation-iteration-count: 1 !important;    /* Only once */
+    transition-duration: 0.01ms !important;     /* Nearly instant */
+  }
+}
+
+/* Focus visible - keyboard navigation indicator */
+button:focus-visible,
+.timeline-content:focus-visible {
+  outline: 3px solid var(--color-accent);      /* Gold outline */
+  outline-offset: 3px;                         /* Space from element */
+  border-radius: var(--radius-sm);             /* Rounded outline */
+}
+
+/* Remove focus outline when not using keyboard */
+button:focus:not(:focus-visible) {
+  outline: none;                               /* No outline for mouse clicks */
+}
