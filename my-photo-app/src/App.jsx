@@ -17,7 +17,6 @@ import { useToast } from './hooks/useToast';
 
 // Global Styles
 import './styles/App.css';
-import './styles/Toast.css';
 
 /**
  * App Component - Main application entry point
@@ -144,7 +143,7 @@ function App() {
             } 
           />
 
-          {/* Gallery Page - Only pass showInfoToast here */}
+          {/* Gallery Page */}
           <Route 
             path="/gallery" 
             element={

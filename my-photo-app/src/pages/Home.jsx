@@ -32,11 +32,10 @@ export default function Home({ showSuccessToast, showErrorToast }) {
         <div className="hero-overlay"></div>
         
         <div className="hero-content">
-          <p className="hero-subtitle">Professional Photography Services</p>
-          <h1 className="hero-title">Capturing Life's Beautiful Moments</h1>
+          <p className="hero-subtitle">Photography is fun</p>
+          <h1 className="hero-title">Capturing Moments</h1>
           <p className="hero-description">
-            Professional photography services specializing in landscapes, portraits, and events. 
-            Creating timeless images that tell your unique story.
+            Hobby photographer specializing in landscape, portrait, wedding,
           </p>
           
           <div className="hero-cta">
